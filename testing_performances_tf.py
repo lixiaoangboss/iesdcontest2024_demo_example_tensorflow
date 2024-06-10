@@ -35,7 +35,7 @@ def main():
     subject_metrics = []
 
     # Load trained network
-    net = models.load_model(path_net + 'ECG_net_tf.h5')
+    net = models.load_model(path_net + 'ECG_net_tf0.96.h5')
 
     subjects_above_threshold = 0
 
@@ -119,7 +119,7 @@ def main():
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
     argparser.add_argument('--size', type=int, default=1250)
-    argparser.add_argument('--path_data', type=str, default='D:/Data_Experiment/data_ECGdb_ICMCdb/training_dataset/')
+    argparser.add_argument('--path_data', type=str, default='./training_dataset/')
     argparser.add_argument('--path_net', type=str, default='./saved_models/')
     argparser.add_argument('--path_record', type=str, default='./records/')
     argparser.add_argument('--path_indices', type=str, default='./data_indices/')
