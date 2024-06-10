@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras import models, layers, optimizers, losses
 import argparse
 from help_code_demo_tf import ECG_DataSET, ToTensor, create_dataset  # 您可能需要调整这部分，以确保数据加载和转换与 TensorFlow 兼容
-from models.model_tf import AFNet
+from models.model_tf2 import AFNet
 from tensorflow.keras.optimizers.schedules import CosineDecay
 
 
@@ -31,7 +31,7 @@ def main():
     # 创建余弦退火调度器
     lr_schedule = CosineDecay(
         initial_learning_rate=0.001,
-        decay_steps=20000,
+        decay_steps=15000,
         alpha=0.01  # 最小学习率为 initial_learning_rate * alpha
     )
     optimizer = optimizers.Adam(learning_rate=lr_schedule)# adam优化器
@@ -97,10 +97,10 @@ def main():
     # Save model
         if correct / total > best:
             best=correct / total
-            net.save('./saved_models2/ECG_net_tf'+str(number)+'.h5')
+            net.save('./saved_models/ECG_net_tf'+str(number)+'.h5')
 
     # Write results to file
-    file = open('./saved_models2/loss_acc.txt', 'w')
+    file = open('./saved_models/loss_acc.txt', 'w')
     file.write("Train_loss\n")
     file.write(str(Train_loss))
     file.write('\n\n')
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
     argparser.add_argument('--epoch', type=int, help='epoch number', default=30)# 训练轮数
     argparser.add_argument('--lr', type=float, help='learning rate', default=0.001)# 训练学习率
-    argparser.add_argument('--batchsz', type=int, help='total batchsz for traindb', default=32)# 批量大小
+    argparser.add_argument('--batchsz', type=int, help='total batchsz for traindb', default=80)# 批量大小
     argparser.add_argument('--size', type=int, default=1251)# 总共训练的行数
     argparser.add_argument('--path_data', type=str, default='./training_dataset/')# 训练集
     argparser.add_argument('--path_indices', type=str, default='./data_indices/')# 标签集
